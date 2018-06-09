@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Choose Animal</h2>
+<hr  />
+<script type="text/javascript">
+    function Animal(aName, aDescription) {
+        this.aName = aName;
+        this.aDescription = aDescription;
+    }
+
+    Animal.prototype = {
+        get animalName() {
+            return this.aName;
+        },
+
+        set animalName(aName) {
+            this.aName = aName;
+        },
+        get animalDesc(){
+            return this.aDescription;
+        },
+        set animalDesc(desc){
+            this.aDescription=desc;
+        }
+    };
+    function divCreate(){
+        var div=document.createElement("div");
+        div.setAttribute("div", "myDiv");
+        div.className="mdiv";
+        document.body.appendChild(div);
+        var desc1=document.createElement("Label");
+        var select = document.createElement('select');
+        select.id="slct1";
+        select.addEventListener("change", labelChange);
+        var animalName=document.createElement("Label");
+        animalName.textContent='Name:';
+        div.appendChild(animalName);
+        div.appendChild(select);
+        var descText=document.createElement("Label");
+        descText.textContent=' Description: ';
+        div.appendChild(descText);
+        desc1.id="desc1";
+        div.appendChild(desc1);
+    }
+    window.onload=divCreate();
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyAi4hBFVOh3-wGwnuJPcaUfuygnQbpHA90",
+        authDomain: "animalfinder-903d8.firebaseapp.com",
+        databaseURL: "https://animalfinder-903d8.firebaseio.com",
+        projectId: "animalfinder-903d8",
+        storageBucket: "animalfinder-903d8.appspot.com",
+        messagingSenderId: "410970732736"
+    };
+    firebase.initializeApp(config);
+    database=firebase.database();
+    var ref=database.ref('Animals');
+    ref.on('value',gotData, errData);
+    var array=[];
+    var selection = document.getElementById('slct1');
+    function gotData(data){
+        var animals=data.val();
+        var keys=Object.keys(animals);
+        for(var i=0; i<keys.length;i++){
+            var k=keys[i];
+            var el = document.createElement("option");
+            el.textContent = animals[k].aName;
+            el.value = animals[k].aDescription;
+            selection.appendChild(el);
+        }
+        console.log(array);
+    }
+
+    function errData(err){
+        console.log('Error!');
+        console.log(err);
+    }
+
+    for (var i = 0; i < array.length; i++) {
+        var opt = array[i];
+        var el = document.createElement("option");
+
+
+    }
+    function labelChange() {
+        var e = document.getElementById("slct1");
+        var desc = e.value;
+        document.getElementById('desc1').innerHTML = desc;
+    }
+
+</script>
+<hr />
+</body>
+</html>

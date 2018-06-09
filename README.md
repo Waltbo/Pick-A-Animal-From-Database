@@ -1,2 +1,2 @@
-# Pick-A-Animal-From-Database
-Combines the Pick-A-Animal program and the JSON Program to give you selections from a database
+# JSON-Animals
+This program returns a JSON of animals by pulling data from a database
